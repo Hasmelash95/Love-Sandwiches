@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -30,6 +31,7 @@ def get_sales_data():
             break
     return sales_data    
 
+
 def validate_data(values):
     """
     Inside the try, converts strings to ints. Raises ValueError
@@ -49,6 +51,7 @@ def validate_data(values):
 
     return True
 
+
 def update_sales_worksheet(data):
     """
     Update sales worksheet, add new row with list data provided
@@ -58,6 +61,25 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully!\n")
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
-update_sales_worksheet(sales_data)
+def calculate_surplus(sales_row):
+    """
+    Compare sales with stock and calculate surplus
+    """
+    print("Calculating surplass data...\n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    stock_row = stock[-1]
+    print(stock_row)
+
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_surplus(sales_data)
+
+print("Welcome to love sandwiches data automation!")
+main()
+
+
