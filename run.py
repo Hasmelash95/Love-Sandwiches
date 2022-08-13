@@ -36,7 +36,7 @@ def validate_data(values):
     if strings cannot be converted to ints or if they aren't exactly 6 
     numbers.
     """
-    print(values)
+    
     try:
         [int(value) for value in values]
         if len(values) != 6:
@@ -49,4 +49,15 @@ def validate_data(values):
 
     return True
 
+def update_sales_worksheet(data):
+    """
+    Update sales worksheet, add new row with list data provided
+    """
+    print("Updating sales worksheet...\n")
+    sales_worksheet = SHEET.worksheet("sales")
+    sales_worksheet.append_row(data)
+    print("Sales worksheet updated successfully!\n")
+
 data = get_sales_data()
+sales_data = [int(num) for num in data]
+update_sales_worksheet(sales_data)
